@@ -23,7 +23,7 @@ using System.Web.Hosting;
         }
         catch (Exception ex)
         {
-            if (ex.Message == "failed to connect to the server")
+            if (ex.Message == "failed to connect to the server!!!!!!!!!")
             {
                 //500
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
