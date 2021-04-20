@@ -29,7 +29,7 @@ using System.Web.Hosting;
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
 
             }
-            else if (ex.Message == "no content was inserted!!!!!!!!!!!!!!!!")
+            else if (ex.Message == "no content was inserted!????????????/")
             {
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
                 //throw (ex);
