@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Content_Upload_Model.Models.DAL;
+//using Content_Upload_Model.Models.DAL;
 using Kaatsu.Models.DAL;
 
 namespace Content_Upload_Model.Models
