@@ -1,0 +1,259 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../Scripts/ajaxCallsWithKey.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="css/index.css" rel="stylesheet" />
+    <link href="css/Popup.css" rel="stylesheet" />
+
+        <title></title>
+
+            <script>
+
+                $(document).ready(function () {
+                videoList = localStorage.getItem('videoList')
+                videoL = JSON.parse(videoList);
+                customerDet = localStorage.getItem('customer')
+                customerDet = JSON.parse(customerDet);
+                trainingProgramC = localStorage.getItem('trainingProgramC')
+                trainingProgramC = JSON.parse(trainingProgramC);
+
+                $("#personalDet").click(personalDet)
+                $("#FinalRank").click(postRank);
+                $("#opinion").hide();
+                 str1 = " "
+
+                 cusFName = customerDet.FirstName
+                 cusLName = customerDet.SurName
+                 custTPC = trainingProgramC.Tname
+
+                    str1 = "<div class='firstLast'>" + "היי " + cusFName + " " + cusLName + "," + "</br>" + "אלו הסרטונים בתוכנית שבחרת: " +"<u>"+"<b>"+ custTPC+"</b>"+"</u>"+"</div>"
+                 $("#ph1").html(str1);
+                str = ""
+                str = "<div class='row'>"
+                str = "<div class='w3-container col-sm-10'>"
+
+                    if (videoL != null) {
+                        for (var i = 0; i < videoL.length; i++) {
+
+                            videoPath = videoL[i].Subtitlepath
+                            videoT = videoL[i].Caption
+                            str += "<div class='w3-card-4 divCard col-sm-4'>"
+                            str += "<header class='w3-container w3-light-grey'>" + "<h3 id='headerH1'>" + videoT + "</h3>"
+                            str += "</header >"
+                            str += "<div class='w3-container'>"
+                            str += "<a class='active' id='" + videoL[i].VideoId + "'onclick = 'opinion(this)' >דרג</a >"
+                            str += "<video class='sizeV' controls='controls'>"
+                            str += "<source src='" + videoPath + "' type='video/mp4' />"
+                            str += "</video>"
+                            str += "</div>"
+                            str += "<button class='w3-button w3-block w3-dark-grey'> אהבתי!</button>"
+
+                            str += "</div>"
+
+                        }
+                    }
+
+                    else
+                    {
+                        userId = customerDet.Id
+                        ajaxCall("GET", "../api/customer/videoList?id=" + userId , " ", postSuccessGetVideos, postErrorGetVideos)
+                    }
+                   
+                str += "</div>"
+                str += "</div>"
+                $("#ph").html(str);
+
+            });
+
+             function postSuccessGetVideos(videos)
+             {
+                 videoL = videos
+                 str = ""
+
+                 str = "<div class='w3-container'>"
+                 for (var i = 0; i < videoL.length; i++) {
+
+                     videoPath = videoL[i].Subtitlepath
+                     videoT = videoL[i].Caption
+                     str += "<div class='w3-card-4 divCard'>"
+                     str += "<header class='w3-container w3-light-grey'>" + "<h3 id='headerH1'>" + videoT + "</h3>"
+                     str += "</header >"
+                     str += "<div class='w3-container'>"
+                     str += "<video class='sizeV' controls='controls'>"
+                     str += "<source src='" + videoPath + "' type='video/mp4' />"
+                     str += "</video>"
+                     str += "</div>"
+                     str += "<button class='w3-button w3-block w3-dark-grey'> אהבתי!</button>"
+
+                     str += "</div>"
+                 }
+
+                 str += "</div>"
+                 $("#ph").html(str);
+                 localStorage.setItem('videoList', JSON.stringify(videoL));
+             }
+
+             function postErrorGetVideos()
+             {
+                 console.log("postErrorGetVideos")
+             }
+
+             function personalDet()
+             {
+
+                window.location = "customerDeUpdate.html"
+
+                }
+
+                // ליאור למטה
+
+                function opinion(object) {
+                    $("#myModal").show();
+                    // Get the modal
+                    var modal = document.getElementById("myModal");
+
+                    // Get the button that opens the modal
+                    var btn = document.getElementById("myBtn");
+
+                    // Get the <span> element that closes the modal
+                    var span = document.getElementsByClassName("close")[0];
+
+                    //// When the user clicks the button, open the modal
+                    //btn.onclick = function () {
+                    //    modal.style.display = "block";
+                    //}
+
+                    // When the user clicks on <span> (x), close the modal
+                    span.onclick = function () {
+                        modal.style.display = "none";
+                    }
+
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function (event) {
+                        if (event.target == modal) {
+                            modal.style.display = "none";
+                        }
+                    }
+
+                    VideoId = object.id;
+                }
+
+                function InsertRank(idRank) {
+                    IdRank = idRank;
+                }
+
+                function InsertRankFinal(idRankLike) {
+                    IdRankLike = idRankLike;
+
+                    if (IdRankLike == "like")
+                        IdRankLike = "True";
+                    IdRankLike = "False";
+
+                    console.log(IdRankLike)
+                    console.log(IdRank)
+                    console.log(VideoId)
+
+                    customer = localStorage.getItem('customer')
+                    customerSelect = JSON.parse(customer);
+                    customerId = customerSelect.Id;
+                    console.log(customerId)
+
+                    n = new Date();
+                    y = n.getFullYear();
+                    m = n.getMonth() + 1;
+                    d = n.getDate();
+                    date = m + "-" + d + "-" + y;
+                    console.log(date)
+
+                    //date = DateTime.FixedLocalNow;
+                    //console.log(date)
+
+                }
+
+                function postRank() {
+
+                    let rank = {
+                        UseruserId: customerId,
+                        VideoCode: VideoId,
+                        RankDate: date,
+                        RankValue: IdRank,
+                        RankLike: IdRankLike
+                    }
+
+                    ajaxCall("POST", "../api/Rank", JSON.stringify(rank), postSuccess, postError)
+                    return false;
+                }
+
+                function postSuccess(data) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'שיחקת אותה! מודים לך על הדירוג!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    $("#myModal").hide();
+
+                    //alert("הדירוג : " + data + " הוקם בהצלחה!")
+                }
+
+                function postError(err) {
+                    console.log(err.responseJSON.Message);
+                    alert("קרתה שגיאה בהעלאת הדירוג שלך! אנא נסה מאוחר יותר");
+                }
+
+    </script>
+
+</head>
+<body>
+    <img class="logoF" src="Images/KaautsuIsrael.png" />
+    <div class="icon-bar">
+        <a href="customerDeUpdate.html"><i class="fa fa-address-card-o" id="personalDet"></i> עדכון פרטים אישיים </a>
+        <a href="recommendTP.html"><i class="fa fa-refresh"></i> התאמת תוכנית אימון </a>
+        <a id="active" href="index.html"><span class="fa fa-home"></span> עמוד הבית </a>
+        <a id="logOut" class="active" href="logIn.html"><i class="fa fa-user"></i> התנתקות </a>
+
+    </div>
+    <hr />
+    <div id="ph1"></div>
+    <div id="ph"></div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p class="bold">איך היה האימון לדעתך?</p>
+            <div class="row">
+                <p class="col-sm-4"><img onclick="InsertRank(this.id)" id="easy" src="../../imgesFileProject/קל.png" /></p>
+                <p class="col-sm-4"><img onclick="InsertRank(this.id)" id="medium" src="../../imgesFileProject/בינוני.png" /></p>
+                <p class="col-sm-4"><img onclick="InsertRank(this.id)" id="hard" src="../../imgesFileProject/קשה.png" /></p>
+            </div>
+
+            <div class="row">
+                <p class="col-sm-4">קל</p>
+                <p class="col-sm-4">בינוני</p>
+                <p class="col-sm-4">קשה</p>
+            </div>
+            <br />
+            <p class="bold">אהבת את הסרטון?</p>
+            <div class="row">
+                <p class="col-sm-6"><img onclick="InsertRankFinal(this.id)" id="like" src="../../imgesFileProject/אהבתי.png" /></p>
+                <p class="col-sm-6"><img onclick="InsertRankFinal(this.id)" id="notLike" src="../../imgesFileProject/לא אהבתי.png" /></p>
+            </div>
+
+            <button class="button" id="FinalRank">סיימתי!</button>
+        </div>
+    </div>
+</body>
+</html>
