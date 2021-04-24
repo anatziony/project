@@ -156,11 +156,24 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\categoryController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\ContentController.cs" />
+    <Compile Include="Controllers\customerController.cs" />
+    <Compile Include="Controllers\DBServiceController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\RankController.cs" />
+    <Compile Include="Controllers\TagsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\category.cs" />
+    <Compile Include="Models\Content.cs" />
+    <Compile Include="Models\customer.cs" />
+    <Compile Include="Models\DAL\DBServices.cs" />
+    <Compile Include="Models\Profile.cs" />
+    <Compile Include="Models\Rank.cs" />
+    <Compile Include="Models\recommendedTrainingProgram.cs" />
+    <Compile Include="Models\Tag.cs" />
+    <Compile Include="Models\video.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +185,35 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Pages\Categories.html" />
+    <Content Include="Pages\css\customerForm.css" />
+    <Content Include="Pages\css\customerFormUpdate.css" />
+    <Content Include="Pages\css\index.css" />
+    <Content Include="Pages\css\logIn.css" />
+    <Content Include="Pages\css\recommendTP.css" />
+    <Content Include="Pages\customerDeUpdate.html" />
+    <Content Include="Pages\customerForm.html" />
+    <Content Include="Pages\declaration.html" />
+    <Content Include="Pages\HtmlPage1.html" />
+    <Content Include="Pages\Images\41.jpg" />
+    <Content Include="Pages\Images\bg-store.jpeg" />
+    <Content Include="Pages\Images\bg.jpeg" />
+    <Content Include="Pages\Images\edited.jpg" />
+    <Content Include="Pages\Images\KaautsuIsrael.png" />
+    <Content Include="Pages\Images\maxresdefault.jpg" />
+    <Content Include="Pages\Images\personaltraining2.jpg" />
+    <Content Include="Pages\Images\prod1.jpg" />
+    <Content Include="Pages\Images\QA.png" />
+    <Content Include="Pages\Images\store1.jpg" />
+    <Content Include="Pages\index.html" />
+    <Content Include="Pages\index_Content_Upload.html" />
+    <Content Include="Pages\logIn.html" />
+    <Content Include="Pages\ManegerPage.html" />
+    <Content Include="Pages\OpinionPopup.html" />
+    <Content Include="Pages\recommendTP.html" />
+    <Content Include="Pages\UsersReport.html" />
+    <Content Include="Pages\videos\בבבב-2021-04-04T12-21-57.mp4" />
+    <Content Include="Pages\videos\חיטוב בדקה אחת-2021-04-04T01-00-34.mp4" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -216,7 +258,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="bin\" />
+    <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
