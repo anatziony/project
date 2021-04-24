@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <script src="../Scripts/bootstrap.js"></script>
+    <link href="CSS/UsersReportcss.css" rel="stylesheet" />
+    <script>
+        $(document).ready(function () {
+            $('#Manger').click(GoBack);
+            ajaxCall("GET", "../api/customer", "", getSuccess, error);
+        });
+
+        function GoBack() {
+            window.location = "ManegerPage.html"
+        }
+
+        function getSuccess(users) {
+            try {
+                //----פה הוספתי
+                for (var i = 0; i < users.length; i++) {
+                    if (users[i].ActiveLastYear == 'false') {
+                        users[i].ActiveLastYear = 'לא';
+                    }
+                    else
+                        users[i].ActiveLastYear = 'כן';
+                }
+                 //----פה הוספתי
+
+                tbl = $('#usersTable').DataTable({
+                    data: users,
+                    pageLength: 10,
+                    columns: [
+                        {
+
+                            render: function (data, type, row, meta) {
+                                let dataUsers = "data-cattId='" + row.Id + "'";
+                                //editBtn = "<button type='button' class = 'editBtn btn btn-success' " + categories + "> ערוך </button>";
+                                //deleteBtn = "<button type='button' class = 'deleteBtn btn btn-danger' " + categories + "> מחק </button>";
+                                editBtn = " ";
+                                deleteBtn = " ";
+                                return editBtn + deleteBtn;
+                            }
+                        },
+
+                        { data: "Id" },
+                        { data: "Email" },
+                        { data: "Password" },
+                        { data: "FirstName" },
+                        { data: "SurName" },
+                        { data: "ActiveLastYear" },
+                    ],
+
+                });
+
+            }
+
+            catch (err) {
+                alert(err);
+            }
+        }
+
+        function error(err) {
+            swal("Error: " + err);
+        }
+    </script>
+</head>
+<body>
+    <div class="row">
+        <br />
+        <div class="col-sm-2">
+            <button id="Manger" class="button">חזרה למסך מנהל</button>
+        </div>
+
+        <div class="col-sm-10">
+            <img class="LogoImage" src="../imgesFileProject/WhatsApp_Image_2021-02-25_at_11.52.43-removebg-preview.png" />
+        </div>
+    </div>
+    <div class="upload"><span>דוח משתמשים</span></div>
+    <hr />
+
+    <div class="container" id="formCamp">
+        <form id="Mform">
+            <table id="usersTable" class="display nowrap" style="width:100%">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>מספר מנוי</th>
+                        <th>מייל</th>
+                        <th>סיסמא</th>
+                        <th>שם פרטי</th>
+                        <th>שם משפחה</th>
+                        <th>האם פעיל?</th>
+                    </tr>
+                </thead>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
