@@ -25,7 +25,7 @@ using System.Web.Hosting;
         {
             if (ex.Message == "failed to connect to the server")
             {
-                //500
+                //5000000
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
 
             }
